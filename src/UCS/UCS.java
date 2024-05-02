@@ -11,6 +11,7 @@ public class UCS {
     private List<String> finalPath;
     private PriorityQueue<Simpul> pq;
     private int orderCounter; // Counter for assigning order value
+    private long time;
 
     public UCS() {
         pq = new PriorityQueue<>(new Comparator<Simpul>() {
@@ -25,6 +26,7 @@ public class UCS {
             }
         });
         orderCounter = 0;
+        time = 0;
     }
 
     public List<String> getFinalPath() {
@@ -32,6 +34,7 @@ public class UCS {
     }
 
     public void searchUCS(String input, String target, Graf g) {
+        long startTime = System.currentTimeMillis();
         List<String> initPath = new ArrayList<>();
         pq.offer(new Simpul(input, 0, initPath, orderCounter++)); // Assign order value
         Simpul simp = pq.poll();
@@ -57,8 +60,12 @@ public class UCS {
             // e.printStackTrace();
             // }
         }
+        long finishTime = System.currentTimeMillis();
 
-        finalPath = simp.getPath();
+        long elapsedTime = finishTime - startTime;
+        this.time = elapsedTime;
+        this.finalPath = simp.getPath();
+        this.finalPath.add(target);
     }
 
     public void printPriorityQueue() {
@@ -67,5 +74,15 @@ public class UCS {
             System.out.print(simp.getWord() + "(" + simp.getTotalWeight() + ")" + " ");
         }
         System.out.println("");
+    }
+
+    public void printResult() {
+        String hasil = String.join("-> ", this.finalPath);
+        System.out.println("====SOLUSI UCS====");
+        System.out.println("Waktu : " + this.time + " ms");
+        System.out.println("Waktu : " + (float) this.time / 1000 + " detik");
+
+        System.out.println(hasil);
+
     }
 }

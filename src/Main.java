@@ -14,7 +14,7 @@ public class Main {
         String savePath = "src/save.json";
         MapBuilder builder = new MapBuilder();
         FileParser fileParser = new FileParser();
-        List<String> fileContent = fileParser.readFile(fileName, 5, 5);
+        List<String> fileContent = fileParser.readFile(fileName, 1, 4);
         fileParser.displayInformation();
 
         Map<Integer, Map<String, List<String>>> wordMap = builder.buildWordMap(fileContent);
@@ -32,23 +32,15 @@ public class Main {
         GBFS gbfsL = new GBFS(true);
         AStar astar = new AStar();
 
-        String input = "debug";
-        String tujuan = "plant";
-        // graph.printAdjNode("dat");
-        // graph.printAdjNode("dot");
-        // System.out.println(gbfs.countHeuristic(input, tujuan));
+        String input = "fist";
+        String tujuan = "poop";
+
         astar.searchAStar(input, tujuan, graph);
+        astar.printResult();
         gbfs.searchGBFS(input, tujuan, graph);
-
-        List<String> gbfsPath = gbfs.getFinalPath();
-        gbfsPath.add(tujuan);
-        String joined = String.join("-> ", gbfsPath);
-        System.out.println(joined);
-
-        List<String> astarpath = astar.getFinalPath();
-        astarpath.add(tujuan);
-        joined = String.join("-> ", astarpath);
-        System.out.println(joined);
+        gbfs.printResult();
+        ucs.searchUCS(input, tujuan, graph);
+        ucs.printResult();
 
     }
 }

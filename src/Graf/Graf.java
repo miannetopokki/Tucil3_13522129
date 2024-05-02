@@ -3,11 +3,11 @@ package Graf;
 import java.util.*;
 
 public class Graf {
-    private int V; // Jumlah node/vertex
+
     private Map<String, Integer> indexMap; // Map untuk memetakan nama node ke indeks
     private List<LinkedList<Edge>> adjList; // Daftar ketetanggaan untuk setiap node
 
-    // Inner class untuk merepresentasikan edge antar node
+    // Inner class edge
     public class Edge {
         String destination;
         int weight;
@@ -26,9 +26,7 @@ public class Graf {
         }
     }
 
-    // Konstruktor untuk inisialisasi graf dengan jumlah node tertentu
     public Graf(int V) {
-        this.V = V;
         indexMap = new HashMap<>();
         adjList = new ArrayList<>();
         for (int i = 0; i < V; ++i) {
@@ -40,13 +38,12 @@ public class Graf {
         return this.adjList;
     }
 
-    // Method untuk menambahkan edge baru dengan biaya antar node
     public void addEdge(String source, String destination, int weight) {
         if (!indexMap.containsKey(source)) {
-            indexMap.put(source, indexMap.size()); // Tambahkan ke map jika belum ada
+            indexMap.put(source, indexMap.size()); // masuk ke map kalo belum ada
         }
         if (!indexMap.containsKey(destination)) {
-            indexMap.put(destination, indexMap.size()); // Tambahkan ke map jika belum ada
+            indexMap.put(destination, indexMap.size()); // masuk ke map jg
         }
         int sourceIndex = indexMap.get(source);
         Edge edge = new Edge(destination, weight);
@@ -69,7 +66,6 @@ public class Graf {
         System.out.println("Converting  success!");
     }
 
-    // Method untuk mencetak graf
     public void printGraph() {
         for (Map.Entry<String, Integer> entry : indexMap.entrySet()) {
             String nodeLabel = entry.getKey();
@@ -94,13 +90,12 @@ public class Graf {
     }
 
     public int getNodeIndex(String nodeLabel) {
-        // Iterasi melalui map indeks untuk mencari nodeLabel
         for (Map.Entry<String, Integer> entry : indexMap.entrySet()) {
             if (entry.getKey().equals(nodeLabel)) {
-                return entry.getValue(); // Mengembalikan indeks node jika ditemukan
+                return entry.getValue();
             }
         }
-        return -1; // Mengembalikan -1 jika node tidak ditemukan
+        return -1; // idx invalid
     }
 
 }
