@@ -1,8 +1,8 @@
-package src.Graf;
+package Graf;
 
 import java.util.*;
 
-public class Graf{
+public class Graf {
     private int V; // Jumlah node/vertex
     private Map<String, Integer> indexMap; // Map untuk memetakan nama node ke indeks
     private List<LinkedList<Edge>> adjList; // Daftar ketetanggaan untuk setiap node
@@ -16,11 +16,13 @@ public class Graf{
             this.destination = destination;
             this.weight = weight;
         }
-        public int getWeight(){
+
+        public int getWeight() {
             return this.weight;
         }
-        public String getDestination(){
-           return this.destination;
+
+        public String getDestination() {
+            return this.destination;
         }
     }
 
@@ -33,7 +35,8 @@ public class Graf{
             adjList.add(new LinkedList<>());
         }
     }
-    public List<LinkedList<Edge>> getAdjList(){
+
+    public List<LinkedList<Edge>> getAdjList() {
         return this.adjList;
     }
 
@@ -53,7 +56,7 @@ public class Graf{
     public void convertMapToGraph(Map<Integer, Map<String, List<String>>> mapWord) {
         System.out.println("Converting from map to graph...");
         for (Map.Entry<Integer, Map<String, List<String>>> entry : mapWord.entrySet()) {
-            System.out.printf("Sekarang converting map word length %d ke graph %d \n" , entry.getKey(), entry.getKey());
+            System.out.printf("Sekarang converting map word length %d ke graph %d \n", entry.getKey(), entry.getKey());
             Map<String, List<String>> lengthMap = entry.getValue();
             for (Map.Entry<String, List<String>> wordEntry : lengthMap.entrySet()) {
                 String word = wordEntry.getKey();
@@ -62,7 +65,8 @@ public class Graf{
                     addEdge(word, kata, 1);
                 }
             }
-        }System.out.println("Converting  success!");
+        }
+        System.out.println("Converting  success!");
     }
 
     // Method untuk mencetak graf
@@ -77,6 +81,18 @@ public class Graf{
             System.out.println();
         }
     }
+
+    public void printAdjNode(String word) {
+
+        int nodeIndex = getNodeIndex(word);
+        System.out.println("Node " + word + " Terhubung ke :");
+        for (Edge edge : adjList.get(nodeIndex)) {
+            System.out.print(edge.destination + ",");
+        }
+        System.out.println();
+
+    }
+
     public int getNodeIndex(String nodeLabel) {
         // Iterasi melalui map indeks untuk mencari nodeLabel
         for (Map.Entry<String, Integer> entry : indexMap.entrySet()) {
@@ -87,5 +103,4 @@ public class Graf{
         return -1; // Mengembalikan -1 jika node tidak ditemukan
     }
 
-    
 }

@@ -1,4 +1,4 @@
-package src.MapBuilder;
+package MapBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;

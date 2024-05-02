@@ -1,9 +1,11 @@
-package src.UCS;
+package UCS;
+
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.Comparator;
-import src.Graf.Graf;
+import Graf.Graf;
+import Simpul.Simpul;
 
 public class UCS {
     private List<String> finalPath;
@@ -42,17 +44,17 @@ public class UCS {
                 if (!simp.getPath().contains(edge.getDestination())) {
                     List<String> temp = new ArrayList<>(simp.getPath());
                     temp.add(simp.getWord());
-                    pq.offer(new Simpul(edge.getDestination(), simp.getTotalWeight() + edge.getWeight(), temp, orderCounter++)); // Assign order value
+                    pq.offer(new Simpul(edge.getDestination(), simp.getTotalWeight() + edge.getWeight(), temp,
+                            orderCounter++)); // Assign order value mencegah starvation
                 }
             }
             // printPriorityQueue();
             simp = pq.poll();
-            
+
             // try {
-            //     Thread.sleep(5);
+            // Thread.sleep(100);
             // } catch (InterruptedException e) {
-            //     // Handle interruption if needed
-            //     e.printStackTrace();
+            // e.printStackTrace();
             // }
         }
 
@@ -62,7 +64,7 @@ public class UCS {
     public void printPriorityQueue() {
         System.out.println("Simpul Hidup : ");
         for (Simpul simp : this.pq) {
-            System.out.print(simp.getWord() + "(" + simp.getTotalWeight()+ ")" +" ");
+            System.out.print(simp.getWord() + "(" + simp.getTotalWeight() + ")" + " ");
         }
         System.out.println("");
     }

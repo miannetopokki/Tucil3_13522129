@@ -1,4 +1,5 @@
-package src.UCS;
+package Simpul;
+
 import java.util.List;
 import java.util.ArrayList;
 

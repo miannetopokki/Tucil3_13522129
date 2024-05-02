@@ -1,4 +1,4 @@
-package src.FileParser; // Paket yang sesuai dengan struktur direktori
+package FileParser; // Paket yang sesuai dengan struktur direktori
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,7 +23,8 @@ public class FileParser {
     public int getMax() {
         return this.maxlength;
     }
-    public void displayInformation(){
+
+    public void displayInformation() {
         int count = 0;
         for (int i = 0; i <= getMax(); i++) {
             count = 0;
