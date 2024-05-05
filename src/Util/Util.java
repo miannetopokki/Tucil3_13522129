@@ -15,4 +15,22 @@ public class Util {
         return diffCount;
     }
 
+    public static void timer(int x) {
+        try {
+            Thread.sleep(x);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public static boolean isValid(String sh) {
+        if (sh.trim().isEmpty()) { // Periksa apakah string kosong atau hanya berisi spasi
+            return false;
+        }
+        for (int i = 0; i < sh.length(); i++) {
+            if (sh.charAt(i) < 0 || sh.charAt(i) > 127) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -5,84 +5,101 @@ import java.util.PriorityQueue;
 import java.util.ArrayList;
 import java.util.Comparator;
 import Graf.Graf;
+import Util.Util;
 import Simpul.Simpul;
+import java.util.*;
 
 public class UCS {
     private List<String> finalPath;
     private PriorityQueue<Simpul> pq;
     private int orderCounter; // Counter for assigning order value
     private long time;
+    private int n_explored;
+    private boolean isfound;
 
     public UCS() {
-        pq = new PriorityQueue<>(new Comparator<Simpul>() {
-            @Override
-            public int compare(Simpul s1, Simpul s2) {
-                int weightComparison = Integer.compare(s1.getTotalWeight(), s2.getTotalWeight());
-                if (weightComparison != 0) {
-                    return weightComparison; // Jika total bobotnya berbeda, kembalikan perbandingan bobot
-                }
-                // Jika total bobotnya sama, bandingkan berdasarkan urutan masuk (order)
-                return Integer.compare(s1.getOrder(), s2.getOrder());
-            }
-        });
-        orderCounter = 0;
+        pq = new PriorityQueue<>(Comparator.comparing(Simpul::getTotalWeight).thenComparing(Simpul::getOrder));
+        finalPath = new ArrayList<>();
         time = 0;
+        orderCounter = 0;
+        n_explored = 0;
+        isfound = false;
     }
 
     public List<String> getFinalPath() {
         return this.finalPath;
     }
 
+    public PriorityQueue<Simpul> getPrioQueue() {
+        return this.pq;
+    }
+
     public void searchUCS(String input, String target, Graf g) {
         long startTime = System.currentTimeMillis();
         List<String> initPath = new ArrayList<>();
-        pq.offer(new Simpul(input, 0, initPath, orderCounter++)); // Assign order value
-        Simpul simp = pq.poll();
-
-        while (!simp.getWord().equals(target)) {
-            // System.out.printf("Simpuel E : %s \n", simp.getWord());
+        pq.offer(new Simpul(input, 0, initPath, orderCounter++));
+        Set<String> visited = new HashSet<>(); // Simpan simpul yang sudah dieksplorasi
+    
+        while (!pq.isEmpty()) {
+            Simpul simp = pq.poll();
+            if (simp.getWord().equals(target)) {
+                long finishTime = System.currentTimeMillis();
+                long elapsedTime = finishTime - startTime;
+                this.time = elapsedTime;
+                this.finalPath = simp.getPath();
+                this.finalPath.add(target);
+                this.isfound = true;
+                return;
+            }
+    
+            if (visited.contains(simp.getWord())) {
+                continue; // Skip simpul yang sudah dieksplorasi
+            }
+    
+            visited.add(simp.getWord());
+            n_explored++;
             int nextId = g.getNodeIndex(simp.getWord());
-
+            // System.out.printf("==================SIMPUL BARU %s=======================\n", simp.getWord());
             for (Graf.Edge edge : g.getAdjList().get(nextId)) {
                 if (!simp.getPath().contains(edge.getDestination())) {
                     List<String> temp = new ArrayList<>(simp.getPath());
                     temp.add(simp.getWord());
-                    pq.offer(new Simpul(edge.getDestination(), simp.getTotalWeight() + edge.getWeight(), temp,
-                            orderCounter++)); // Assign order value mencegah starvation
+                    Simpul add = new Simpul(edge.getDestination(), simp.getTotalWeight() + edge.getWeight(), temp,
+                            orderCounter++);
+                    
+                    // Periksa apakah simpul sudah ada di PriorityQueue
+                    boolean exists = pq.stream().anyMatch(s -> s.getWord().equals(add.getWord()));
+                    if (!exists) {
+                        pq.offer(add);
+                        // Util.timer(100);
+                        // printPriorityQueue();
+                    }
                 }
             }
-            // printPriorityQueue();
-            simp = pq.poll();
-
-            // try {
-            // Thread.sleep(100);
-            // } catch (InterruptedException e) {
-            // e.printStackTrace();
-            // }
         }
-        long finishTime = System.currentTimeMillis();
-
-        long elapsedTime = finishTime - startTime;
-        this.time = elapsedTime;
-        this.finalPath = simp.getPath();
-        this.finalPath.add(target);
     }
-
+    
     public void printPriorityQueue() {
+        PriorityQueue<Simpul> tempPQ = new PriorityQueue<>(pq); 
         System.out.println("Simpul Hidup : ");
-        for (Simpul simp : this.pq) {
-            System.out.print(simp.getWord() + "(" + simp.getTotalWeight() + ")" + " ");
+        while (!tempPQ.isEmpty()) {
+            Simpul simp = tempPQ.poll();
+            System.out.print(simp.getWord() + "(" + simp.getTotalWeight() + "," + simp.getOrder() + ")" + " ");
         }
         System.out.println("");
     }
 
     public void printResult() {
-        String hasil = String.join("-> ", this.finalPath);
         System.out.println("====SOLUSI UCS====");
+        if(this.isfound){
+            String hasil = String.join("-> ", this.finalPath);
+            System.out.println(hasil);
+        }else{
+            System.out.println("Tidak ada solusi");
+        }
         System.out.println("Waktu : " + this.time + " ms");
         System.out.println("Waktu : " + (float) this.time / 1000 + " detik");
-
-        System.out.println(hasil);
-
+        System.out.println("Smpul yang dieksplor: " + this.n_explored);
+       
     }
 }

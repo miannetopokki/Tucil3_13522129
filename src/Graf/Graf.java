@@ -42,14 +42,22 @@ public class Graf {
         if (!indexMap.containsKey(source)) {
             indexMap.put(source, indexMap.size()); // masuk ke map kalo belum ada
         }
+        int sourceIndex = indexMap.get(source);
         if (!indexMap.containsKey(destination)) {
             indexMap.put(destination, indexMap.size()); // masuk ke map jg
         }
-        int sourceIndex = indexMap.get(source);
-        Edge edge = new Edge(destination, weight);
-        adjList.get(sourceIndex).add(edge);
+        int destinationIndex = indexMap.get(destination);
+        
+        // Tambahkan edge ke adjList hanya jika destination valid
+        if (destinationIndex < adjList.size()) {
+            Edge edge = new Edge(destination, weight);
+            adjList.get(sourceIndex).add(edge);
+        } else {
+            // Hapus semua elemen dari adjList jika destination tidak valid
+            adjList.get(sourceIndex).clear();
+        }
     }
-
+    
     public void convertMapToGraph(Map<Integer, Map<String, List<String>>> mapWord) {
         System.out.println("Converting from map to graph...");
         for (Map.Entry<Integer, Map<String, List<String>>> entry : mapWord.entrySet()) {
@@ -79,14 +87,23 @@ public class Graf {
     }
 
     public void printAdjNode(String word) {
-
         int nodeIndex = getNodeIndex(word);
         System.out.println("Node " + word + " Terhubung ke :");
-        for (Edge edge : adjList.get(nodeIndex)) {
-            System.out.print(edge.destination + ",");
+        LinkedList<Edge> edges = adjList.get(nodeIndex);
+        for (int i = 0; i < edges.size(); i++) {
+            Edge edge = edges.get(i);
+            System.out.print(edge.destination);
+            if (i < edges.size() - 1) {
+                System.out.print(", ");
+            }
         }
         System.out.println();
-
+    }
+    public String getAdjWord(String word,int i){
+        int nodeIndex = getNodeIndex(word);
+        LinkedList<Edge> edges = adjList.get(nodeIndex);
+        return edges.get(i).destination;
+    
     }
 
     public int getNodeIndex(String nodeLabel) {
@@ -96,6 +113,13 @@ public class Graf {
             }
         }
         return -1; // idx invalid
+    }
+    public boolean hasNeighbors(String nodeLabel) {
+        int nodeIndex = getNodeIndex(nodeLabel);
+        if (nodeIndex != -1) {
+            return !adjList.get(nodeIndex).isEmpty();
+        }
+        return false; // Node tidak ditemukan
     }
 
 }

@@ -3,7 +3,7 @@ package Simpul;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Simpul {
+public class Simpul implements Comparable<Simpul> {
     private String word;
     private int totalWeight;
     private List<String> path;
@@ -28,6 +28,10 @@ public class Simpul {
         return this.totalWeight;
     }
 
+    public void addOrder(int x) {
+        this.order += x;
+    }
+
     public List<String> getPath() {
         return this.path;
     }
@@ -45,5 +49,15 @@ public class Simpul {
 
     public int getOrder() {
         return this.order;
+    }
+
+    @Override
+    public int compareTo(Simpul other) {
+        // Prioritize based on total weight, and then order counter
+        if (this.totalWeight != other.totalWeight) {
+            return Integer.compare(this.totalWeight, other.totalWeight);
+        } else {
+            return Integer.compare(this.order, other.order);
+        }
     }
 }
