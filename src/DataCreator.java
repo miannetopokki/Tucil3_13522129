@@ -3,6 +3,7 @@ import MapBuilder.*;
 import FileParser.*;
 import java.util.*;;
 
+// Program ini digunakan untuk membuat data kamus txt dari map.
 public class DataCreator {
     public static void main(String[] args) {
         String fileName = "oracle.txt";

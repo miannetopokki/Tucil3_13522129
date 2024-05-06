@@ -1,0 +1,7 @@
+Kata awal : recap
+Kata akhir : timer
+-default
+-asisten :
+Mau pakai kamus folder apa?
+default
+

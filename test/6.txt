@@ -1,0 +1,6 @@
+Kata awal : water
+Kata akhir : phone
+-default
+-asisten :
+Mau pakai kamus folder apa?
+default

@@ -49,12 +49,12 @@ public class GBFS {
             }
             // Node gk valid di graf
             int nextId = g.getNodeIndex(simp.getWord());
-            if (nextId == -1) { 
-                continue; 
+            if (nextId == -1) {
+                continue;
             }
             // Simpul gk punya tetangga
-            if (g.getAdjWord(input,0).isEmpty()) { 
-                continue; 
+            if (g.getAdjWord(simp.getWord(), 0).isEmpty()) {
+                break; // gak ada solusi
             }
             for (Graf.Edge edge : g.getAdjList().get(nextId)) {
                 if (!simp.getPath().contains(edge.getDestination())) {
@@ -66,14 +66,14 @@ public class GBFS {
                 }
             }
         }
-         // no solusi
+        // no solusi
         this.isfound = false;
-        this.finalPath.clear(); 
-        this.time = 0; 
+        this.finalPath.clear();
+        this.time = 0;
     }
 
     public void printPriorityQueue() {
-        PriorityQueue<Simpul> tempPQ = new PriorityQueue<>(pq); 
+        PriorityQueue<Simpul> tempPQ = new PriorityQueue<>(pq);
         System.out.println("Simpul Hidup : ");
         while (!tempPQ.isEmpty()) {
             Simpul simp = tempPQ.poll();
@@ -88,15 +88,16 @@ public class GBFS {
 
     public void printResult() {
         System.out.println("====SOLUSI GBFS====");
-        if(this.isfound){
+        if (this.isfound) {
             String hasil = String.join("-> ", this.finalPath);
             System.out.println(hasil);
-        }else{
+        } else {
             System.out.println("Tidak ada solusi");
         }
+        System.out.println("Banyak step : " + (this.finalPath.size() - 1) + " step");
         System.out.println("Waktu : " + this.time + " ms");
         System.out.println("Waktu : " + (float) this.time / 1000 + " detik");
         System.out.println("Smpul yang dieksplor: " + this.n_explored);
-       
+
     }
 }

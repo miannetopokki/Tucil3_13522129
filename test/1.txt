@@ -1,0 +1,8 @@
+Kata awal : poop
+Kata akhir : look
+-default
+-asisten :
+Mau pakai kamus folder apa?
+default
+
+

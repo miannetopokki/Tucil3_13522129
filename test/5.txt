@@ -1,0 +1,8 @@
+Kata awal : island
+Kata akhir : better
+-default
+-asisten :
+Mau pakai kamus folder apa?
+default
+
+

@@ -1,0 +1,7 @@
+Kata awal : idol
+Kata akhir : tidy
+-default
+-asisten :
+Mau pakai kamus folder apa?
+default
+

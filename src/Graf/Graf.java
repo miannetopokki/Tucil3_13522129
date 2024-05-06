@@ -47,7 +47,7 @@ public class Graf {
             indexMap.put(destination, indexMap.size()); // masuk ke map jg
         }
         int destinationIndex = indexMap.get(destination);
-        
+
         // Tambahkan edge ke adjList hanya jika destination valid
         if (destinationIndex < adjList.size()) {
             Edge edge = new Edge(destination, weight);
@@ -57,11 +57,12 @@ public class Graf {
             adjList.get(sourceIndex).clear();
         }
     }
-    
+
     public void convertMapToGraph(Map<Integer, Map<String, List<String>>> mapWord) {
-        System.out.println("Converting from map to graph...");
+        // System.out.println("Converting from map to graph...");
         for (Map.Entry<Integer, Map<String, List<String>>> entry : mapWord.entrySet()) {
-            System.out.printf("Sekarang converting map word length %d ke graph %d \n", entry.getKey(), entry.getKey());
+            // System.out.printf("Sekarang converting map word length %d ke graph %d \n",
+            // entry.getKey(), entry.getKey());
             Map<String, List<String>> lengthMap = entry.getValue();
             for (Map.Entry<String, List<String>> wordEntry : lengthMap.entrySet()) {
                 String word = wordEntry.getKey();
@@ -71,7 +72,7 @@ public class Graf {
                 }
             }
         }
-        System.out.println("Converting  success!");
+        // System.out.println("Converting success!");
     }
 
     public void printGraph() {
@@ -99,11 +100,12 @@ public class Graf {
         }
         System.out.println();
     }
-    public String getAdjWord(String word,int i){
+
+    public String getAdjWord(String word, int i) {
         int nodeIndex = getNodeIndex(word);
         LinkedList<Edge> edges = adjList.get(nodeIndex);
         return edges.get(i).destination;
-    
+
     }
 
     public int getNodeIndex(String nodeLabel) {
@@ -114,6 +116,7 @@ public class Graf {
         }
         return -1; // idx invalid
     }
+
     public boolean hasNeighbors(String nodeLabel) {
         int nodeIndex = getNodeIndex(nodeLabel);
         if (nodeIndex != -1) {
