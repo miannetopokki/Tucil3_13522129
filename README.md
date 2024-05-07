@@ -14,8 +14,7 @@ Java(TM) SE Runtime Environment (build 20.0.2+9-78)
 ## Installation
 
 1. Pertama, Clone Repository ini : `https://github.com/miannetopokki/Tucil3_13522129.git`
-2. Apabila ingin run program yang sudah di compile : `cd bin` Lalu `java Main`
-3. Apabila ingin meng-compile dan run, pastikan di directory root lalu jalankan `./run.bat`
+2. Apabila ingin meng-compile dan run, pastikan di directory root lalu jalankan `./run.bat`
 
 
 ## How To Use
