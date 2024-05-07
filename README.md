@@ -34,7 +34,7 @@ Kata tujuan:
 -default
 -asisten 
 Mau pakai kamus folder apa?
-(asisten)
+(default)
 Mau Pakai algoritma apa?
 1. UCS
 2. Greedy-Best First Search
@@ -43,5 +43,22 @@ Mau Pakai algoritma apa?
 (4)
 ```
 ```
-
+====SOLUSI UCS====
+cat-> dat-> dot-> dog
+Banyak step : 3 step
+Waktu : 470 ms
+Waktu : 0.47 detik
+Smpul yang dieksplor: 617
+====SOLUSI GBFS====
+cat-> dat-> dot-> dog
+Banyak step : 3 step
+Waktu : 4 ms
+Waktu : 0.004 detik
+Smpul yang dieksplor: 4
+====SOLUSI AStar====
+cat-> dat-> dot-> dog
+Banyak step : 3 step
+Waktu : 3 ms
+Waktu : 0.003 detik
+Smpul yang dieksplor: 7
 ```
